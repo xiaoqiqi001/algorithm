@@ -93,6 +93,8 @@ export default {
           }
         }
       }
+      // 先将初始值押入栈中
+      tempStack.push({x: 0, y: 0})
       runMaze(innerMazeMap, 0, 0, 0)
       console.log('最短路', minStack)
       minStack.forEach((item) => {
