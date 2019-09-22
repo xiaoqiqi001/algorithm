@@ -14,27 +14,11 @@ export default {
   data () {
     return {
       mazeMap: [
-        [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,0,0,1,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
-        [1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,1,1],
-        [1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
-        [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,1,1,1,1],
-        [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,1],
-        [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,1],
-        [1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,1],
-        [1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1],
-        [1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1],
-        [1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1],
-        [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1],
-        [1,1,1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1],
-        [1,1,1,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0]
+        [0,0,0,1,1,1],
+        [0,1,0,1,1,1],
+        [0,1,0,0,0,1],
+        [0,1,1,1,0,1],
+        [0,0,0,0,0,0]
       ],
       path: {
         x: 0,
@@ -64,40 +48,28 @@ export default {
     async beginRunMazeMap () {
       console.log('开始走迷宫了')
       let innerMazeMap = this.mazeMap
-      let tempStack = []
-      let minStack = []
-      let minSize = 9999
       
       let runMaze = async (mazeMap, x, y, level) => {
-        // console.log('当前x和y的值分别是', x, y)
-        if (x === 20 && y === 31) {
-          if (level <= minSize) {
-            minSize = level
-            minStack = JSON.parse(JSON.stringify(tempStack))
-          }
+        console.log('当前x和y的值分别是', x, y)
+        if (x === 4 && y === 4) {
           console.log('我到了')
           return false
         }
         for (let index = 0; index < this.operators.length; index++) {
           let resultX = x + this.operators[index]['x']
           let resultY = y + this.operators[index]['y']
-          if (resultX >= 0 && resultX <= 20 && resultY >= 0 && resultY <= 31 && mazeMap[resultX][resultY] === 0) {
-            tempStack.push({x: resultX, y: resultY})
+          if (resultX >= 0 && resultX <= 4 && resultY >= 0 && resultY <= 4 && mazeMap[resultX][resultY] === 0) {
             this.$set(this.mazeMap[resultX], resultY, 2)
             mazeMap[resultX][resultY] = 2
             // await this.sleep(1000)
             runMaze(mazeMap, resultX, resultY, level + 1)
-            tempStack.pop()
+            console.log('我返回了', index, level, resultX, resultY)
             this.$set(this.mazeMap[resultX], resultY, 0)
             mazeMap[resultX][resultY] = 0
           }
         }
       }
       runMaze(innerMazeMap, 0, 0, 0)
-      console.log('最短路', minStack)
-      minStack.forEach((item) => {
-        this.$set(this.mazeMap[item.x], item.y, 2)
-      })
     },
     async beginStackMaze () {
       let diyStack = [{x: 0, y: 0}]
