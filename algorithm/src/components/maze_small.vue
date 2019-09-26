@@ -41,8 +41,8 @@ export default {
   },
   created() {
     // this.beginRunMazeMap()
-    // this.beginStackMaze()
-    this.shortestRoad()
+    this.beginStackMaze()
+    // this.shortestRoad()
   },
   components: {
     treeItem
