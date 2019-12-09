@@ -1,5 +1,6 @@
 let numberArr = [34,23,23,4,3,4,3,43,4,231,312,3,213,12,3,12,31];
 
+// 分治法的例子
 function mergeSort (arr, leftIndex, rightIndex) {
   if (leftIndex === rightIndex) {
     return
